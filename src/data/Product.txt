@@ -1,0 +1,4 @@
+1,ip12,red,5.5,new
+2,ip13,blue,6.1,light-new
+3,ip14,white,7.2,80%
+4,ip10,red,6.6,90%
