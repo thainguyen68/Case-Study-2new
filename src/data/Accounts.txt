@@ -1,5 +1,5 @@
-1,Admin,123,Admin,nvt.689@gmail.com,0379452820,Hà Nội,Admin
-2,thai456,456,Nguyễn Văn Thái 2,vtn.689@gmail.com,0166889988,Hồ Chí Minh,User
-3,thai123,123,Nguyễn Văn Thái 3,tvn.689@gmail.com,0996868839,Đà Nẵng,User
-4,thainguyen68,6899,Nguyễn Văn Thái 1,tvn.689@gmail.com,03789654321,Đà Lạt,User
-5,hihi123,1,hihi Nguyễn,Hihi@yahoo.com,0978542580,Cà Mau,User
+1,Admin,Admin.123,Admin,nvt.689@gmail.com,0379452820,Hà Nội,Admin
+2,thai456,Thai.456,Nguyễn Văn Thái 2,vtn.689@gmail.com,0166889988,Hồ Chí Minh,User
+3,thai123,Thai.123,Nguyễn Văn Thái 3,tvn.689@gmail.com,0996868839,Đà Nẵng,User
+4,thainguyen68,Thai.6899,Nguyễn Văn Thái 1,tvn.689@gmail.com,03789654321,Đà Lạt,User
+5,hihi123,Hihi.123,hihi Nguyễn,Hihi@yahoo.com,0978542580,Cà Mau,User

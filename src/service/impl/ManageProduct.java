@@ -4,13 +4,16 @@ import ioFile.IOFile;
 import model.Color;
 import model.Product;
 import service.Manage;
+import service.ManageFind;
+import service.ManageSort;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class ManageProduct implements Manage<Product>, IOFile<Product> {
+public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFind, ManageSort {
     private Scanner scanner;
     private List<Product> productList = new ArrayList<>();
     private final ManageColor manageColor;
@@ -64,14 +67,15 @@ public class ManageProduct implements Manage<Product>, IOFile<Product> {
         System.out.println("Input color of product: ");
         Color color;
         do {
-            color = manageColor.getById();
+            int id = manageColor.inputId();
+            color = manageColor.getById(id);
         } while (color == null);
         return color;
     }
 
     public Product update() {
         Product product = getById();
-        if (product != null){
+        if (product != null) {
             System.out.println("Change product name: ");
             String name = scanner.nextLine();
             if (!name.equals("")) {
@@ -82,16 +86,15 @@ public class ManageProduct implements Manage<Product>, IOFile<Product> {
             product.setColor(getColor());
 
             System.out.println("Change product price: ");
-            Double price;
-            try{
+            double price;
+            try {
                 price = Double.parseDouble(scanner.nextLine());
-                if (price != null){
+                if (price > 0) {
                     product.setPrice(price);
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Please re-enter the number!");
             }
-
 
             System.out.println("Change product description: ");
             String description = scanner.nextLine();
@@ -99,15 +102,16 @@ public class ManageProduct implements Manage<Product>, IOFile<Product> {
                 product.setDescription(description);
             }
         }
+        write(productList,PATH_FILE);
         return product;
     }
 
     public Product delete() {
         Product product = getById();
-        if(product != null){
+        if (product != null) {
             productList.remove(product);
         }
-        write(productList,PATH_FILE);
+        write(productList, PATH_FILE);
         return product;
     }
 
@@ -161,13 +165,57 @@ public class ManageProduct implements Manage<Product>, IOFile<Product> {
             String data;
             while ((data = bufferedReader.readLine()) != null) {
                 String[] strings = data.split(",");
-                Product product = new Product(Integer.parseInt(strings[0]), strings[1], new Color(strings[2]), Double.parseDouble(strings[3]), strings[4]);
+                Color color = manageColor.getById(Integer.parseInt(strings[2]));
+                Product product = new Product(Integer.parseInt(strings[0]), strings[1], color, Double.parseDouble(strings[3]), strings[4]);
                 productList.add(product);
             }
         } catch (IOException ioException) {
             System.err.println(ioException.getMessage());
         }
         return productList;
+    }
+
+    public void searchById() {
+        System.out.println("Enter id of products you want to find: ");
+        int idSearch = -1;
+        try {
+            idSearch = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.err.println("Please re-enter the number!");
+        }
+        boolean check = false;
+        for (int i = 0; i < productList.size(); i++) {
+            if (idSearch == productList.get(i).getId()) {
+                check = true;
+                System.out.printf("%-15s%-15s%-15s%-18s%s",
+                        "Id", "Name", "Color", "Price", "Description\n");
+                productList.get(i).display();
+            }
+        }
+        if (!check){
+            System.err.println("not found");
+        }
+    }
+
+    public void searchByName() {
+        System.out.println("Enter name product you want to find");
+        String name = scanner.nextLine();
+        System.out.printf("%-15s%-15s%-15s%-18s%s",
+                "Id", "Name", "Color", "Price", "Description\n");
+        for (Product product: productList){
+            if (product.getName().contains(name)){
+                product.display();
+            }
+        }
+    }
+
+    public void sortByName() {
+        productList.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
     }
 
 }

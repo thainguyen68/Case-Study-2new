@@ -83,10 +83,25 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
         }
 
         System.out.println("Create Password: ");
-        String password = scanner.nextLine();
-        if (password == null || password.equals("")) {
-            return null;
-        }
+        String password;
+        boolean checkPassword;
+        do {
+            Pattern pattern2 = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
+            password = scanner.nextLine();
+            Matcher matcher2 = pattern2.matcher(password);
+            if (matcher2.matches()) {
+                checkPassword = true;
+                System.out.println("Valid Password address !");
+            } else {
+                checkPassword = false;
+                System.err.println("Password address is not valid !");
+            }
+            if (count == 3) {
+                return null;
+            }
+            count++;
+        } while (!checkPassword);
+
         System.out.println("Create FullName: ");
         String fullName = scanner.nextLine();
         if (fullName == null || fullName.equals("")) {
@@ -185,8 +200,18 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
                 }
 
                 System.out.println("Change password:");
+                Pattern pattern2 = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
                 String password = scanner.nextLine();
-                if (!username.equals("")) {
+                Matcher matcher2 = pattern2.matcher(password);
+                boolean flag2;
+                if (matcher2.matches()) {
+                    flag2 = true;
+                    System.out.println("Valid password number");
+                } else {
+                    flag2 = false;
+                    System.out.println("invalid password number ! ");
+                }
+                if (flag2) {
                     accountList.get(i).setPassword(password);
                 }
 
@@ -262,10 +287,21 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
             if (result.getRole().getId() == accountList.get(i).getId()) {
                 Index = i;
                 System.out.println("Change password:");
+                Pattern pattern2 = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
                 String password = scanner.nextLine();
-                if (!password.equals("")) {
-                    accountList.get(i).setPassword(password);
+                Matcher matcher2 = pattern2.matcher(password);
+                boolean flag3;
+                if (matcher2.matches()) {
+                    flag3 = true;
+                    System.out.println("Valid password address !");
+                } else {
+                    flag3 = false;
+                    System.out.println("Email password is not valid !");
                 }
+                if (flag3) {
+                    accountList.get(i).setEmail(password);
+                }
+
 
                 System.out.println("fullName:");
                 String fullName = scanner.nextLine();

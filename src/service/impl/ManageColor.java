@@ -11,65 +11,77 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ManageColor implements Manage<Color>, IOFile<Color> {
-    private Scanner scanner;
-    private List<Color> colorList = new ArrayList<>();
+    private final Scanner scanner;
+    private List<Color> colorList;
     private final String PATH_FILE = "E:\\Case-Study-2\\src\\data\\Color.tet";
 
 
     public ManageColor(Scanner scanner) {
         this.scanner = scanner;
+        this.colorList = new ArrayList<>();
 //        addColor();
         colorList = read(PATH_FILE);
         checkDefaultIndex();
+
     }
 
 
-    public void addColor(){
-        Color color1 = new Color(1,"red");
-        Color color2 = new Color(2,"blue");
+    public void addColor() {
+        Color color1 = new Color(1, "red");
+        Color color2 = new Color(2, "blue");
         Color color3 = new Color(3, "white");
         colorList.add(color1);
         colorList.add(color2);
         colorList.add(color3);
-        write(colorList,PATH_FILE);
+        write(colorList, PATH_FILE);
     }
+
     private void checkDefaultIndex() {
         if (colorList.isEmpty()) {
-            Product.idUp = 0;
+            Color.idUpColor = 0;
         } else {
-            Product.idUp = colorList.get(colorList.size() - 1).getId();
+            Color.idUpColor = colorList.get(colorList.size() - 1).getId();
         }
     }
 
-    public Color create(){
+    public Color create() {
         System.out.println("Enter the color name you want:");
         String colorName = scanner.nextLine();
-        Color colorNew = new Color(colorName);
-        colorList.add(colorNew);
+        colorList.add(new Color(colorName));
+        write(colorList, PATH_FILE);
         return new Color();
     }
 
-    public Color update(){
-        Color color = getById();
-        if (color != null){
+    public Color update() {
+        int id = inputId();
+        Color color = getById(id);
+        if (color != null) {
             System.out.println("Change the color name you want");
             String nameColorChange = scanner.nextLine();
-            if (!nameColorChange.equals("")){
+            if (!nameColorChange.equals("")) {
                 color.setNameColor(nameColorChange);
             }
         }
+        write(colorList, PATH_FILE);
         return color;
     }
 
-    public Color delete(){
-        Color color = getById();
-        if (color != null){
+    public Color delete() {
+        int id = inputId();
+        Color color = getById(id);
+        if (color != null) {
             colorList.remove(color);
         }
+        write(colorList, PATH_FILE);
         return color;
     }
 
-    public Color getById(){
+    @Override
+    public Color getById() {
+        return null;
+    }
+
+    public int inputId() {
         int id;
         do {
             try {
@@ -80,6 +92,20 @@ public class ManageColor implements Manage<Color>, IOFile<Color> {
                 System.err.println("Have error, please try again!");
             }
         } while (true);
+        return id;
+    }
+
+    public Color getById(int id) {
+//        int id;
+//        do {
+//            try {
+//                System.out.println("Input id you want: ");
+//                id = Integer.parseInt(scanner.nextLine());
+//                break;
+//            } catch (NumberFormatException e) {
+//                System.err.println("Have error, please try again!");
+//            }
+//        } while (true);
 
         for (Color color : colorList) {
             if (color.getId() == id) {
@@ -89,9 +115,9 @@ public class ManageColor implements Manage<Color>, IOFile<Color> {
         return null;
     }
 
-    public void displayAll(){
-        System.out.printf("%-10s%s","Id","Color\n");
-        for (Color c:colorList){
+    public void displayAll() {
+        System.out.printf("%-10s%s", "Id", "Color\n");
+        for (Color c : colorList) {
             System.out.println(c);
         }
     }

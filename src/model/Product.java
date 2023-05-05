@@ -48,7 +48,7 @@ public class Product {
     }
 
     public void setColor(Color color) {
-        this.color = this.color;
+        this.color = color;
     }
 
     public double getPrice() {
@@ -72,7 +72,7 @@ public class Product {
     @Override
     public String toString() {
         return
-                id + "," + name + "," + color.getNameColor() + "," + price + "," + description;
+                id + "," + name + "," + color.getId() + "," + price + "," + description;
     }
 
     public void display() {
