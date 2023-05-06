@@ -111,7 +111,7 @@ public static Account result;
             try {
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
-                System.err.println("Please re-enter the number!");
+                System.out.println("Please re-enter the number!");
             }
 
             switch (choice) {
@@ -240,7 +240,7 @@ public static Account result;
             try {
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
-                System.err.println("Please re-enter the number!");
+                System.out.println("Please re-enter the number!");
             }
 
             switch (choice) {

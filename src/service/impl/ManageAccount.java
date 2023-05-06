@@ -74,22 +74,30 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
     @Override
     public Account create() {
         int count = 0;
+        int count1 = 0;
+        int count2 = 0;
 
         System.out.println("Create your account ! ");
         System.out.println("Create Username: ");
         String username = scanner.nextLine();
-        if (username == null || username.equals("")) {
-            return null;
+        for (Account account: accountList){
+            if (username == null && username.equals("")) {
+                return null;
+            }
+            if (username.equals(account.getUsername())){
+                System.err.println("Account already exists !");
+                return null;
+            }
         }
 
         System.out.println("Create Password: ");
         String password;
         boolean checkPassword;
         do {
-            Pattern pattern2 = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
+            Pattern pattern = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
             password = scanner.nextLine();
-            Matcher matcher2 = pattern2.matcher(password);
-            if (matcher2.matches()) {
+            Matcher matcher = pattern.matcher(password);
+            if (matcher.matches()) {
                 checkPassword = true;
                 System.out.println("Valid Password address !");
             } else {
@@ -112,20 +120,20 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
         String email;
         boolean checkEmail;
         do {
-            Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+            Pattern pattern1 = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
             email = scanner.nextLine();
-            Matcher matcher = pattern.matcher(email);
-            if (matcher.matches()) {
+            Matcher matcher1 = pattern1.matcher(email);
+            if (matcher1.matches()) {
                 checkEmail = true;
                 System.out.println("Valid email address !");
             } else {
                 checkEmail = false;
                 System.err.println("Email address is not valid !");
             }
-            if (count == 3) {
+            if (count1 == 3) {
                 return null;
             }
-            count++;
+            count1++;
         } while (!checkEmail);
 
 
@@ -133,20 +141,20 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
         String phoneNumber;
         boolean checkPhoneNumber;
         do {
-            Pattern pattern1 = Pattern.compile("^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}$");
+            Pattern pattern2 = Pattern.compile("^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}$");
             phoneNumber = scanner.nextLine();
-            Matcher matcher1 = pattern1.matcher(phoneNumber);
-            if (matcher1.matches()) {
+            Matcher matcher2 = pattern2.matcher(phoneNumber);
+            if (matcher2.matches()) {
                 checkPhoneNumber = true;
                 System.out.println("Valid phone number");
             } else {
                 checkPhoneNumber = false;
                 System.err.println("invalid phone number ! ");
             }
-            if (count == 4) {
+            if (count2 == 4) {
                 return null;
             }
-            count++;
+            count2++;
         } while (!checkPhoneNumber);
 
 
@@ -181,30 +189,29 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
     @Override
     public Account update() {
         System.out.println("update your account !");
-        System.out.println("Enter id:");
-        int idUpdate = -1;
-        try {
-            idUpdate = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.err.println("Please re-enter the number!");
-        }
-
-        int Index = 0;
-        for (int i = 0; i < accountList.size(); i++) {
-            if (idUpdate == accountList.get(i).getId()) {
-                Index = i;
-                System.out.println("username:");
+        Account account = getById();
+            if (account != null) {
+                System.out.println("Change username:");
                 String username = scanner.nextLine();
-                if (!username.equals("")) {
-                    accountList.get(i).setUsername(username);
+                boolean check = false;
+                for (Account account1: accountList){
+                    if (!username.equals("") && !username.equals(account1.getUsername())) {
+                        check = true;
+                        account.setUsername(username);
+
+                    }
+                    if (!check){
+                        System.err.println("Account already exists !");
+                        break;
+                    }
                 }
 
                 System.out.println("Change password:");
-                Pattern pattern2 = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
+                Pattern pattern = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
                 String password = scanner.nextLine();
-                Matcher matcher2 = pattern2.matcher(password);
+                Matcher matcher = pattern.matcher(password);
                 boolean flag2;
-                if (matcher2.matches()) {
+                if (matcher.matches()) {
                     flag2 = true;
                     System.out.println("Valid password number");
                 } else {
@@ -212,21 +219,21 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
                     System.out.println("invalid password number ! ");
                 }
                 if (flag2) {
-                    accountList.get(i).setPassword(password);
+                    account.setPassword(password);
                 }
 
-                System.out.println("fullName:");
+                System.out.println("Change fullName:");
                 String fullName = scanner.nextLine();
                 if (!fullName.equals("")) {
-                    accountList.get(i).setFullName(fullName);
+                    account.setFullName(fullName);
                 }
 
-                System.out.println("email:");
-                Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                System.out.println("Change email:");
+                Pattern pattern1 = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
                 String email = scanner.nextLine();
-                Matcher matcher = pattern.matcher(email);
+                Matcher matcher1 = pattern1.matcher(email);
                 boolean flag;
-                if (matcher.matches()) {
+                if (matcher1.matches()) {
                     flag = true;
                     System.out.println("Valid email address !");
                 } else {
@@ -234,15 +241,15 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
                     System.out.println("Email address is not valid !");
                 }
                 if (flag) {
-                    accountList.get(i).setEmail(email);
+                   account.setEmail(email);
                 }
 
-                System.out.println("phoneNumber:");
-                Pattern pattern1 = Pattern.compile("^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}$");
+                System.out.println("Change phoneNumber:");
+                Pattern pattern2 = Pattern.compile("^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}$");
                 String phoneNumber = scanner.nextLine();
-                Matcher matcher1 = pattern1.matcher(phoneNumber);
+                Matcher matcher2 = pattern2.matcher(phoneNumber);
                 boolean flag1;
-                if (matcher1.matches()) {
+                if (matcher2.matches()) {
                     flag1 = true;
                     System.out.println("Valid phone number");
                 } else {
@@ -250,22 +257,22 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
                     System.out.println("invalid phone number ! ");
                 }
                 if (flag1) {
-                    accountList.get(i).setPhoneNumber(phoneNumber);
+                    account.setPhoneNumber(phoneNumber);
                 }
 
-                System.out.println("address:");
+                System.out.println("Change address:");
                 String address = scanner.nextLine();
                 if (!address.equals("")) {
-                    accountList.get(i).setAddress(address);
+                   account.setAddress(address);
                 }
 
-                System.out.println("role:");
-                accountList.get(i).setRole(getRole());
+                System.out.println("Change role:");
+                account.setRole(getRole());
             }
-        }
+
         System.out.println("Congratulations on your successful update !");
         write(accountList, PATH_FILE);
-        return accountList.get(Index);
+        return account;
     }
 
 
@@ -280,41 +287,40 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
         }
     }
 
-    public Account updateUser() {
+    public void updateUser() {
         System.out.println("update your account !");
-        int Index = 0;
-        for (int i = 0; i < accountList.size(); i++) {
-            if (result.getRole().getId() == accountList.get(i).getId()) {
-                Index = i;
+        for (Account account: accountList) {
+            if (result.getId() == account.getId()) {
+
                 System.out.println("Change password:");
-                Pattern pattern2 = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
+                Pattern pattern = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
                 String password = scanner.nextLine();
-                Matcher matcher2 = pattern2.matcher(password);
+                Matcher matcher = pattern.matcher(password);
                 boolean flag3;
-                if (matcher2.matches()) {
+                if (matcher.matches()) {
                     flag3 = true;
                     System.out.println("Valid password address !");
                 } else {
                     flag3 = false;
-                    System.out.println("Email password is not valid !");
+                    System.out.println("Password is not valid !");
                 }
                 if (flag3) {
-                    accountList.get(i).setEmail(password);
+                    account.setPassword(password);
                 }
 
 
-                System.out.println("fullName:");
+                System.out.println("Change fullName:");
                 String fullName = scanner.nextLine();
                 if (!fullName.equals("")) {
-                    accountList.get(i).setFullName(fullName);
+                    account.setFullName(fullName);
                 }
 
-                System.out.println("email:");
-                Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                System.out.println("Change email:");
+                Pattern pattern1 = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
                 String email = scanner.nextLine();
-                Matcher matcher = pattern.matcher(email);
+                Matcher matcher1 = pattern1.matcher(email);
                 boolean flag;
-                if (matcher.matches()) {
+                if (matcher1.matches()) {
                     flag = true;
                     System.out.println("Valid email address !");
                 } else {
@@ -322,15 +328,15 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
                     System.out.println("Email address is not valid !");
                 }
                 if (flag) {
-                    accountList.get(i).setEmail(email);
+                    account.setEmail(email);
                 }
 
-                System.out.println("phoneNumber:");
-                Pattern pattern1 = Pattern.compile("^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}$");
+                System.out.println("Change phoneNumber:");
+                Pattern pattern2 = Pattern.compile("^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}$");
                 String phoneNumber = scanner.nextLine();
-                Matcher matcher1 = pattern1.matcher(phoneNumber);
+                Matcher matcher2 = pattern2.matcher(phoneNumber);
                 boolean flag1;
-                if (matcher1.matches()) {
+                if (matcher2.matches()) {
                     flag1 = true;
                     System.out.println("Valid phone number");
                 } else {
@@ -338,19 +344,18 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
                     System.out.println("invalid phone number ! ");
                 }
                 if (flag1) {
-                    accountList.get(i).setPhoneNumber(phoneNumber);
+                    account.setPhoneNumber(phoneNumber);
                 }
 
-                System.out.println("address:");
+                System.out.println("Change address:");
                 String address = scanner.nextLine();
                 if (!address.equals("")) {
-                    accountList.get(i).setAddress(address);
+                    account.setAddress(address);
                 }
             }
         }
         System.out.println("Congratulations on your successful update !");
         write(accountList, PATH_FILE);
-        return accountList.get(Index);
     }
 
 
@@ -409,12 +414,12 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
             System.err.println("Please re-enter the number!");
         }
         boolean check = false;
-        for (int i = 0; i < accountList.size(); i++) {
-            if (searchById == accountList.get(i).getId()) {
+        for (Account account : accountList) {
+            if (searchById == account.getId()) {
                 check = true;
                 System.out.printf("%-20s%-20s%-20s%-30s%-30s%-20s%-15s%s",
                         "Id", "Username", "Password", "FullName", "Email", "PhoneNumber", "Address", "Role\n");
-                accountList.get(i).display();
+                account.display();
             }
         }
         if (!check){
