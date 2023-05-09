@@ -135,7 +135,7 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
     }
 
     public void displayAll() {
-        System.out.printf("%-15s%-15s%-15s%-18s%s",
+        System.out.printf("%-15s%-17s%-20s%-20s%s",
                 "Id", "Name", "Color", "Price", "Description\n");
         for (Product p : productList) {
             p.display();
@@ -204,6 +204,31 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
                 "Id", "Name", "Color", "Price", "Description\n");
         for (Product product: productList){
             if (product.getName().contains(name)){
+                product.display();
+            }
+        }
+    }
+    public void searchByColor() {
+        System.out.println("Enter color product you want to find");
+        String name = scanner.nextLine();
+        System.out.printf("%-15s%-15s%-15s%-18s%s",
+                "Id", "Name", "Color", "Price", "Description\n");
+        for (Product product: productList){
+            if (product.getColor().getNameColor().equals(name)){
+                product.display();
+            }
+        }
+    }
+    public void searchByPrice() {
+        System.out.println("Enter about price you want to find");
+        System.out.println("Enter price from: ");
+        int priceMin = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter final price: ");
+        int priceMax = Integer.parseInt(scanner.nextLine());
+        System.out.printf("%-15s%-15s%-15s%-18s%s",
+                "Id", "Name", "Color", "Price", "Description\n");
+        for (Product product: productList){
+            if ( priceMin <= product.getPrice() && product.getPrice() <= priceMax){
                 product.display();
             }
         }

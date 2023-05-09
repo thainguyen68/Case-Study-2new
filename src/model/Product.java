@@ -76,7 +76,7 @@ public class Product {
     }
 
     public void display() {
-        System.out.printf("%-15s%-15s%-15s%-18s%s",
+        System.out.printf("%-15s%-17s%-20s%-20s%s",
                 this.id, this.name, this.color.getNameColor(), this.price+ " USD", this.description + "\n");
     }
 }

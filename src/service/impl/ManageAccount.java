@@ -15,18 +15,20 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static controller.MainRun.result;
+import static controller.MainRun.accountPresent;
 
 public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFind, ManageSort {
     private final Scanner scanner;
     private List<Account> accountList = new ArrayList<>();
     private final ManageRole manageRole;
 
+
     private final String PATH_FILE = "E:\\Case-Study-2\\src\\data\\Accounts.txt";
 
     public ManageAccount(Scanner scanner, ManageRole manageRole) {
         this.scanner = scanner;
         this.manageRole = manageRole;
+
 //        accPush();
         accountList = read(PATH_FILE);
         checkDefaultIndex();
@@ -68,6 +70,16 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
         write(accountList, PATH_FILE);
     }
 
+//    public Account logOut(Account account){
+//        System.out.println("Do you want logout ? ");
+//        System.out.println("1. Yes");
+//        System.out.println("2. No");
+//        int confirm = Integer.parseInt(scanner.nextLine());
+//        if (confirm == 1){
+//            accountPresent = null;
+//        }
+//        return null;
+//    }
 //------------------------------------------------------------------------------------------------------->
 
 
@@ -81,7 +93,7 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
         System.out.println("Create Username: ");
         String username = scanner.nextLine();
         for (Account account: accountList){
-            if (username == null && username.equals("")) {
+            if (username.equals("")) {
                 return null;
             }
             if (username.equals(account.getUsername())){
@@ -279,7 +291,7 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
     public void displayUser() {
         System.out.println("Your profile:....... ");
         for (Account acc : accountList) {
-            if (result.getId() == acc.getId()) {
+            if (accountPresent.getId() == acc.getId()) {
                 System.out.printf("%-20s%-20s%-20s%-30s%-30s%-20s%-15s%s",
                         "Id", "Username", "Password", "FullName", "Email", "PhoneNumber", "Address", "Role\n");
                 acc.display();
@@ -290,7 +302,7 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
     public void updateUser() {
         System.out.println("update your account !");
         for (Account account: accountList) {
-            if (result.getId() == account.getId()) {
+            if (accountPresent.getId() == account.getId()) {
 
                 System.out.println("Change password:");
                 Pattern pattern = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
@@ -357,6 +369,19 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
         System.out.println("Congratulations on your successful update !");
         write(accountList, PATH_FILE);
     }
+
+//    public Account deleteUserAccount(){
+//        System.out.println("delete your account !");
+//        for (Account account: accountList){
+//            if (accountPresent.getId()==account.getId()){
+//                accountList.remove(account);
+//                System.out.println("you have successfully deleted account:" + account.getUsername());
+//                break;
+//            }
+//        }
+//        write(accountList, PATH_FILE);
+//        return MainRun.loginAccount(scanner, manageAccount, manageProduct, manageColor);
+//    }
 
 
     @Override
