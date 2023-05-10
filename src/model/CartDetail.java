@@ -60,7 +60,7 @@ public class CartDetail implements Serializable {
         System.out.printf("%-15s%-15s%-15s%-15s%-15s%-15s%-15s%-15s%s",
                 this.id, this.cart.getName(), this.cart.getDate(),
                 this.product.getId(), this.product.getName(), this.product.getColor().getNameColor(),
-                this.product.getPrice(), this.product.getDescription(),
+                this.product.getPrice()+" $", this.product.getDescription(),
                 this.quantity + "\n");
     }
 }

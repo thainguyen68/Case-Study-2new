@@ -79,7 +79,7 @@ public class Product implements Serializable {
 
     public void display() {
         System.out.printf("%-15s%-17s%-20s%-20s%s",
-                this.id, this.name, this.color.getNameColor(), this.price+ " USD", this.description + "\n");
+                this.id, this.name, this.color.getNameColor(), this.price+ " $", this.description + "\n");
     }
 }
 

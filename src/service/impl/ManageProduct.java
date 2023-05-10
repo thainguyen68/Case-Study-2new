@@ -203,7 +203,7 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
         System.out.printf("%-15s%-15s%-15s%-18s%s",
                 "Id", "Name", "Color", "Price", "Description\n");
         for (Product product : productList) {
-            if (product.getName().contains(name)) {
+            if (product.getName().toLowerCase().contains(name.toLowerCase())) {
                 product.display();
             }
         }
@@ -215,7 +215,7 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
         System.out.printf("%-15s%-15s%-15s%-18s%s",
                 "Id", "Name", "Color", "Price", "Description\n");
         for (Product product : productList) {
-            if (product.getColor().getNameColor().equals(name)) {
+            if (product.getColor().getNameColor().equalsIgnoreCase(name)) {
                 product.display();
             }
         }
@@ -297,6 +297,7 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
                 return o1.getName().compareTo(o2.getName());
             }
         });
+        displayAll();
     }
 
 }

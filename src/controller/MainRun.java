@@ -98,17 +98,17 @@ public class MainRun {
     private static void menuAdminAboutAcc(Scanner scanner, ManageAccount manageAccount) {
         int choice = -1;
         do {
-            System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
-            System.out.println("| _ _ _ _ Menu Account Management _ _ _ _ |");
-            System.out.println("|         1. Display all ACC              |");
-            System.out.println("|         2. Create account               |");
-            System.out.println("|         3. Update account               |");
-            System.out.println("|         4. Delete account               |");
-            System.out.println("|         5. Find account by username     |");
-            System.out.println("|         6. Find account by id           |");
-            System.out.println("|         7. Sort accounts by username    |");
-            System.out.println("|         0. Exit!                        |");
-            System.out.println("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
+            System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
+            System.out.println("| _ _ _ _ Menu Account Management _ _ _ _ _ |");
+            System.out.println("|         1. Display all ACC                |");
+            System.out.println("|         2. Create account                 |");
+            System.out.println("|         3. Update account                 |");
+            System.out.println("|         4. Delete account                 |");
+            System.out.println("|         5. Find account by username       |");
+            System.out.println("|         6. Find account by id             |");
+            System.out.println("|         7. Sort accounts by username      |");
+            System.out.println("|         0. Exit!                          |");
+            System.out.println("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
             System.out.println("         -->Enter your choice here!<--     ");
             try {
                 choice = Integer.parseInt(scanner.nextLine());
@@ -236,22 +236,23 @@ public class MainRun {
     private static void menuUser(Scanner scanner, ManageAccount manageAccount, ManageProduct manageProduct, ManageCart manageCart) {
         int choice = -1;
         do {
-            System.out.println("Menu");
-            System.out.println("1. View your information");
-            System.out.println("2. Update your account");
-            System.out.println("3. View all products");
-            System.out.println("4. Search product by name");
-            System.out.println("5. Search product by color");
-            System.out.println("6. Search product by price");
-            System.out.println("7. Sort by price (about) ");
-            System.out.println("8. Sort by name");
-            System.out.println("9. Add to cart(...)");
-            System.out.println("10. Display cart(...)");
-            System.out.println("11. Delete product in cart(...)");
-            System.out.println("12. Pay product in cart(...)");
-
-            System.out.println("0. Exit!");
-            System.out.println("-->Enter your choice here!<--");
+            System.out.println("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
+            System.out.println("| _ _ _ _ _ _ _ _ _ _Menu_ _ _ _ _ _ _ _ _|");
+            System.out.println("|      1. View your information           |");
+            System.out.println("|      2. Update your account             |");
+            System.out.println("|      3. View all products               |");
+            System.out.println("|      4. Search product by name          |");
+            System.out.println("|      5. Search product by color         |");
+            System.out.println("|      6. Search product by price         |");
+            System.out.println("|      7. Sort by price (about)           |");
+            System.out.println("|      8. Sort by name                    |");
+            System.out.println("|      9. Add to cart(...)                |");
+            System.out.println("|      10. Display cart(...)              |");
+            System.out.println("|      11. Delete product in cart(...)    |");
+            System.out.println("|      12. Pay product in cart(...)       |");
+            System.out.println("|      0. Exit!                           |");
+            System.out.println("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
+            System.out.println("       -->Enter your choice here!<--   ");
             try {
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {

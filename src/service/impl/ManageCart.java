@@ -14,7 +14,7 @@ import static controller.MainRun.accountPresent;
 public class ManageCart {
     private final Scanner scanner = new Scanner(System.in);
     private final String PATH_FILE = "E:\\Case-Study-2\\src\\data\\Cart.txt";
-    private final List<Cart> carts = new ArrayList<>();
+    private final List<Cart> carts;
     private final ArrayList<CartDetail> cartDetails;
     ManageProduct manageProduct;
 
@@ -22,6 +22,7 @@ public class ManageCart {
         this.manageProduct = manageProduct;
         cartDetails = readBinary(PATH_FILE);
         checkDefaultIndex();
+        carts = new ArrayList<>();
     }
 
     private void checkDefaultIndex() {
@@ -122,7 +123,7 @@ public class ManageCart {
                 sum += cartDetail.getProduct().getPrice() * cartDetail.getQuantity();
             }
         }
-        System.out.println("Total: " + sum);
+        System.out.println("Total revenue: " + sum +" $");
     }
 
     public void sumPaid() {
@@ -158,7 +159,7 @@ public class ManageCart {
                 if (cartDetail.getCart().getName().equals(accountPresent.getUsername())) {
                     cartDetail.getCart().setPaid(true);
                     System.out.println("you have successfully paid !");
-                    writeBinary(PATH_FILE,cartDetails);
+                    writeBinary(PATH_FILE, cartDetails);
                 }
             }
         } else if (choose.equals("n")) {
