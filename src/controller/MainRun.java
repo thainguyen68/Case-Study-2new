@@ -1,10 +1,7 @@
 package controller;
 
 import model.Account;
-import service.impl.ManageAccount;
-import service.impl.ManageColor;
-import service.impl.ManageProduct;
-import service.impl.ManageRole;
+import service.impl.*;
 
 import java.util.Scanner;
 
@@ -15,12 +12,13 @@ public class MainRun {
         ManageAccount manageAccount = new ManageAccount(scanner, manageRole);
         ManageColor manageColor = new ManageColor(scanner);
         ManageProduct manageProduct = new ManageProduct(scanner, manageColor);
-        loginAccount(scanner, manageAccount, manageProduct, manageColor);
+        ManageCart manageCart = new ManageCart(manageProduct);
+        loginAccount(scanner, manageAccount, manageProduct, manageColor, manageCart);
     }
 
     public static Account accountPresent;
 
-    public static void login(Scanner scanner, ManageAccount manageAccount, ManageProduct manageProduct, ManageColor manageColor) {
+    public static void login(Scanner scanner, ManageAccount manageAccount, ManageProduct manageProduct, ManageColor manageColor, ManageCart manageCart) {
         System.out.println("Username: ");
         String username = scanner.nextLine();
         System.out.println("Password: ");
@@ -32,14 +30,14 @@ public class MainRun {
             if (accountPresent.getRole().getName().equals("Admin")) {
                 menuAdmin(scanner, manageAccount, manageProduct, manageColor);
             } else {
-                menuUser(scanner, manageAccount, manageProduct);
+                menuUser(scanner, manageAccount, manageProduct, manageCart);
             }
         } else {
             System.err.println("Account does not exist");
         }
     }
 
-    private static void loginAccount(Scanner scanner, ManageAccount manageAccount, ManageProduct manageProduct, ManageColor manageColor) {
+    private static void loginAccount(Scanner scanner, ManageAccount manageAccount, ManageProduct manageProduct, ManageColor manageColor, ManageCart manageCart) {
         int choice = -1;
         do {
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _");
@@ -53,12 +51,12 @@ public class MainRun {
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.err.println("Please re-enter the number!");
-                loginAccount(scanner, manageAccount, manageProduct, manageColor);
+                loginAccount(scanner, manageAccount, manageProduct, manageColor, manageCart);
             }
 
             switch (choice) {
                 case 1:
-                    login(scanner, manageAccount, manageProduct, manageColor);
+                    login(scanner, manageAccount, manageProduct, manageColor, manageCart);
                     break;
                 case 2:
                     manageAccount.create();
@@ -148,7 +146,7 @@ public class MainRun {
         int choice = -1;
         do {
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
-            System.out.println("| _ _ _ _ _ Menu Account Product_ _ _ _ _ |");
+            System.out.println("| _ _ _ _ Menu Product Management _ _ _ _ |");
             System.out.println("|         1. Display all products         |");
             System.out.println("|         2. Create product               |");
             System.out.println("|         3. Update products              |");
@@ -231,7 +229,7 @@ public class MainRun {
         } while (choice != 0);
     }
 
-    private static void menuUser(Scanner scanner, ManageAccount manageAccount, ManageProduct manageProduct) {
+    private static void menuUser(Scanner scanner, ManageAccount manageAccount, ManageProduct manageProduct, ManageCart manageCart) {
         int choice = -1;
         do {
             System.out.println("Menu");
@@ -244,6 +242,8 @@ public class MainRun {
             System.out.println("7. Sort by price (from low to high) ");
             System.out.println("8. Sort by name");
             System.out.println("9. Add to cart(...)");
+            System.out.println("10. Display cart(...)");
+            System.out.println("11. Delete product in cart(...)");
             System.out.println("0. Exit!");
             System.out.println("-->Enter your choice here!<--");
             try {
@@ -276,6 +276,15 @@ public class MainRun {
                     break;
                 case 8:
                     manageProduct.sortByName();
+                    break;
+                case 9:
+                    manageCart.cart();
+                    break;
+                case 10:
+                    manageCart.displayCartUser();
+                    break;
+                case 11:
+                    manageCart.deleteCart();
                     break;
             }
         } while (choice != 0);

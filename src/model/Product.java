@@ -1,6 +1,8 @@
 package model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private static final long serialVersionUID = 3L;
     public static int idUp;
     private int id;

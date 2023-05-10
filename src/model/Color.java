@@ -1,6 +1,8 @@
 package model;
 
-public class Color {
+import java.io.Serializable;
+
+public class Color implements Serializable {
     private static final long serialVersionUID = 3L;
     public static int idUpColor;
     private int id;
