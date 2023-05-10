@@ -102,7 +102,7 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
                 product.setDescription(description);
             }
         }
-        write(productList,PATH_FILE);
+        write(productList, PATH_FILE);
         return product;
     }
 
@@ -192,7 +192,7 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
                 productList.get(i).display();
             }
         }
-        if (!check){
+        if (!check) {
             System.err.println("not found");
         }
     }
@@ -202,36 +202,92 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
         String name = scanner.nextLine();
         System.out.printf("%-15s%-15s%-15s%-18s%s",
                 "Id", "Name", "Color", "Price", "Description\n");
-        for (Product product: productList){
-            if (product.getName().contains(name)){
+        for (Product product : productList) {
+            if (product.getName().contains(name)) {
                 product.display();
             }
         }
     }
+
     public void searchByColor() {
         System.out.println("Enter color product you want to find");
         String name = scanner.nextLine();
         System.out.printf("%-15s%-15s%-15s%-18s%s",
                 "Id", "Name", "Color", "Price", "Description\n");
-        for (Product product: productList){
-            if (product.getColor().getNameColor().equals(name)){
+        for (Product product : productList) {
+            if (product.getColor().getNameColor().equals(name)) {
                 product.display();
             }
         }
     }
+
     public void searchByPrice() {
         System.out.println("Enter about price you want to find");
         System.out.println("Enter price from: ");
-        int priceMin = Integer.parseInt(scanner.nextLine());
+        int priceMin = -1;
+        try {
+            priceMin = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException numberFormatException) {
+            System.err.println("Please re-enter the number!");
+        }
         System.out.println("Enter final price: ");
-        int priceMax = Integer.parseInt(scanner.nextLine());
+        int priceMax = -1;
+        try {
+            priceMax = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException numberFormatException) {
+            System.err.println("Please re-enter the number!");
+        }
         System.out.printf("%-15s%-15s%-15s%-18s%s",
                 "Id", "Name", "Color", "Price", "Description\n");
-        for (Product product: productList){
-            if ( priceMin <= product.getPrice() && product.getPrice() <= priceMax){
+        for (Product product : productList) {
+            if (priceMin <= product.getPrice() && product.getPrice() <= priceMax) {
                 product.display();
             }
         }
+    }
+
+    public void sortByPriceType() {
+        System.out.println("How would you like to arrange?");
+        System.out.println("1. Low to high ");
+        System.out.println("2. High to low ");
+        int chooseSort = -1;
+        try {
+            chooseSort = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException numberFormatException) {
+            System.err.println("Please re-enter the number!");
+        }
+        if (chooseSort == 1) {
+            sortByPriceLowToHigh();
+        } else if (chooseSort == 2){
+            sortByPriceHighTolLow();
+        }
+        else {
+            System.out.println("no choice here !");
+        }
+    }
+
+    public void sortByPriceLowToHigh() {
+        productList.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                if (o1.getPrice() > o2.getPrice()) return 1;
+                else if (o1.getPrice() < o2.getPrice()) return -1;
+                else return 0;
+            }
+        });
+        displayAll();
+    }
+
+    public void sortByPriceHighTolLow() {
+        productList.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                if (o1.getPrice() > o2.getPrice()) return -1;
+                else if (o1.getPrice() < o2.getPrice()) return 1;
+                else return 0;
+            }
+        });
+        displayAll();
     }
 
     public void sortByName() {

@@ -28,7 +28,7 @@ public class MainRun {
         if (accountPresent != null) {
             System.out.println("Hello " + accountPresent.getFullName());
             if (accountPresent.getRole().getName().equals("Admin")) {
-                menuAdmin(scanner, manageAccount, manageProduct, manageColor);
+                menuAdmin(scanner, manageAccount, manageProduct, manageColor, manageCart);
             } else {
                 menuUser(scanner, manageAccount, manageProduct, manageCart);
             }
@@ -67,7 +67,7 @@ public class MainRun {
         } while (true);
     }
 
-    private static void menuAdmin(Scanner scanner, ManageAccount manageAccount, ManageProduct manageProduct, ManageColor manageColor) {
+    private static void menuAdmin(Scanner scanner, ManageAccount manageAccount, ManageProduct manageProduct, ManageColor manageColor, ManageCart manageCart) {
         int choice = -1;
         do {
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _");
@@ -89,7 +89,7 @@ public class MainRun {
                     menuAdminAboutAcc(scanner, manageAccount);
                     break;
                 case 2:
-                    menuAdminAboutProduct(scanner, manageProduct, manageColor);
+                    menuAdminAboutProduct(scanner, manageProduct, manageColor, manageCart);
                     break;
             }
         } while (choice != 0);
@@ -142,7 +142,7 @@ public class MainRun {
         } while (choice != 0);
     }
 
-    private static void menuAdminAboutProduct(Scanner scanner, ManageProduct manageProduct, ManageColor manageColor) {
+    private static void menuAdminAboutProduct(Scanner scanner, ManageProduct manageProduct, ManageColor manageColor, ManageCart manageCart) {
         int choice = -1;
         do {
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
@@ -155,6 +155,7 @@ public class MainRun {
             System.out.println("|         6. Find products by id          |");
             System.out.println("|         7. Sort products by name        |");
             System.out.println("|         8. Menu setting color           |");
+            System.out.println("|         9. Display cart(...)            |");
             System.out.println("|         0. Exit!                        |");
             System.out.println("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
             System.out.println("       --->Enter your choice here!<---     ");
@@ -188,6 +189,9 @@ public class MainRun {
                     break;
                 case 8:
                     menuColor(scanner, manageColor);
+                    break;
+                case 9:
+                    manageCart.displayCart();
                     break;
             }
         } while (choice != 0);
@@ -239,11 +243,13 @@ public class MainRun {
             System.out.println("4. Search product by name");
             System.out.println("5. Search product by color");
             System.out.println("6. Search product by price");
-            System.out.println("7. Sort by price (from low to high) ");
+            System.out.println("7. Sort by price (about) ");
             System.out.println("8. Sort by name");
             System.out.println("9. Add to cart(...)");
             System.out.println("10. Display cart(...)");
             System.out.println("11. Delete product in cart(...)");
+            System.out.println("12. Pay product in cart(...)");
+
             System.out.println("0. Exit!");
             System.out.println("-->Enter your choice here!<--");
             try {
@@ -272,7 +278,7 @@ public class MainRun {
                     manageProduct.searchByPrice();
                     break;
                 case 7:
-
+                    manageProduct.sortByPriceType();
                     break;
                 case 8:
                     manageProduct.sortByName();
@@ -285,6 +291,9 @@ public class MainRun {
                     break;
                 case 11:
                     manageCart.deleteCart();
+                    break;
+                case 12:
+                    manageCart.payCart();
                     break;
             }
         } while (choice != 0);

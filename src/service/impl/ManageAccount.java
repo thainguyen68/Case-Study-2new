@@ -70,16 +70,7 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
         write(accountList, PATH_FILE);
     }
 
-//    public Account logOut(Account account){
-//        System.out.println("Do you want logout ? ");
-//        System.out.println("1. Yes");
-//        System.out.println("2. No");
-//        int confirm = Integer.parseInt(scanner.nextLine());
-//        if (confirm == 1){
-//            accountPresent = null;
-//        }
-//        return null;
-//    }
+
 //------------------------------------------------------------------------------------------------------->
 
 
@@ -104,23 +95,22 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
 
         System.out.println("Create Password: ");
         String password;
-        boolean checkPassword;
         do {
             Pattern pattern = Pattern.compile("^[A-Za-z\\d!@#$%^&*]{8,16}$");
             password = scanner.nextLine();
             Matcher matcher = pattern.matcher(password);
             if (matcher.matches()) {
-                checkPassword = true;
                 System.out.println("Valid Password address !");
+                break;
             } else {
-                checkPassword = false;
                 System.err.println("Password address is not valid !");
             }
+            count++;
             if (count == 3) {
                 return null;
             }
-            count++;
-        } while (!checkPassword);
+
+        } while (true);
 
         System.out.println("Create FullName: ");
         String fullName = scanner.nextLine();
@@ -130,44 +120,41 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
 
         System.out.println("Create Email: ");
         String email;
-        boolean checkEmail;
         do {
             Pattern pattern1 = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
             email = scanner.nextLine();
             Matcher matcher1 = pattern1.matcher(email);
             if (matcher1.matches()) {
-                checkEmail = true;
                 System.out.println("Valid email address !");
+                break;
             } else {
-                checkEmail = false;
                 System.err.println("Email address is not valid !");
             }
+            count1++;
             if (count1 == 3) {
                 return null;
             }
-            count1++;
-        } while (!checkEmail);
+
+        } while (true);
 
 
         System.out.println("Create PhoneNumber: ");
         String phoneNumber;
-        boolean checkPhoneNumber;
         do {
             Pattern pattern2 = Pattern.compile("^(\\+84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-46-9])[0-9]{7}$");
             phoneNumber = scanner.nextLine();
             Matcher matcher2 = pattern2.matcher(phoneNumber);
             if (matcher2.matches()) {
-                checkPhoneNumber = true;
                 System.out.println("Valid phone number");
+                break;
             } else {
-                checkPhoneNumber = false;
                 System.err.println("invalid phone number ! ");
             }
-            if (count2 == 4) {
+            count2++;
+            if (count2 == 3) {
                 return null;
             }
-            count2++;
-        } while (!checkPhoneNumber);
+        } while (true);
 
 
         System.out.println("Create Address: ");

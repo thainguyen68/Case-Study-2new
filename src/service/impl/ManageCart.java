@@ -43,37 +43,49 @@ public class ManageCart {
         manageProduct.displayAll();
         Product p = manageProduct.getById();
         System.out.println("Enter the quantity you want to buy");
-        int quantity = Integer.parseInt(scanner.nextLine());
+        int quantity = 0;
+        try {
+            quantity = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Have error, please try again!");
+        }
         addCart(p, quantity, cart);
     }
 
     public void addCart(Product product, int quantity, Cart cart) {
         CartDetail cartDetail = new CartDetail(cart, product, quantity);
-        cartDetails.add(cartDetail);
+        boolean flag = false;
+        for (CartDetail c : cartDetails) {
+            if (c.getProduct().getName().equals(product.getName()) && cart.getName().equals(c.getCart().getName()) && !c.getCart().isPaid()) {
+                c.setQuantity(c.getQuantity() + quantity);
+                flag = true;
+            }
+        }
+        if (!flag) {
+            cartDetails.add(cartDetail);
+        }
         writeBinary(PATH_FILE, cartDetails);
     }
-
 
     public CartDetail deleteCart() {
         displayCartUser();
         System.out.println("Enter id you want to delete product");
-        int idCart =-1;
+        int idCart = -1;
         try {
             idCart = Integer.parseInt(scanner.nextLine());
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Have error, please try again!");
         }
 
         int index = 0;
         for (int i = 0; i < cartDetails.size(); i++) {
-            if (cartDetails.get(i).getCart().getName().equals(String.valueOf(accountPresent.getUsername()))){
+            if (cartDetails.get(i).getCart().getName().equals(String.valueOf(accountPresent.getUsername()))) {
                 if (idCart == cartDetails.get(i).getId()) {
                     i = index;
                     cartDetails.remove(cartDetails.get(i));
                     System.out.println("Removed from cart !");
                 }
-            }
-            else {
+            } else {
                 return null;
             }
         }
@@ -93,7 +105,7 @@ public class ManageCart {
             }
         } while (true);
         for (CartDetail cartDetail : cartDetails) {
-            if (idCart == cartDetail.getId()) {
+            if (idCart == cartDetail.getId() && cartDetail.getCart().getName().equals(accountPresent.getUsername())) {
                 return cartDetail;
             }
         }
@@ -101,36 +113,61 @@ public class ManageCart {
     }
 
     public void displayCart() {
+        double sum = 0;
         System.out.printf("%-15s%-15s%-15s%-15s%-15s%-15s%-15s%-15s%s",
                 "Id", "UserName", "Date-buy", "Id-Product", "Name-Product", "Color", "Price", "Description", "Quantity\n");
         for (CartDetail cartDetail : cartDetails) {
-            cartDetail.display();
+            if (cartDetail.getCart().isPaid() == true) {
+                cartDetail.display();
+                sum += cartDetail.getProduct().getPrice() * cartDetail.getQuantity();
+            }
         }
+        System.out.println("Total: " + sum);
     }
+
     public void sumPaid() {
         double sum = 0;
         for (CartDetail cartDetail : cartDetails) {
-            sum += cartDetail.getProduct().getPrice() * cartDetail.getQuantity();
+            if (!cartDetail.getCart().isPaid() && cartDetail.getCart().getName().equals(accountPresent.getUsername())) {
+                sum += cartDetail.getProduct().getPrice() * cartDetail.getQuantity();
+            }
         }
         System.out.println("Total amount to be paid: " + sum);
     }
 
     public CartDetail displayCartUser() {
         String usName = String.valueOf(accountPresent.getUsername());
-        double sum = 0;
         System.out.printf("%-15s%-15s%-15s%-15s%-15s%-15s%-15s%-15s%s",
                 "Id", "UserName", "Date-buy", "Id-Product", "Name-Product", "Color", "Price", "Description", "Quantity\n");
         for (int i = 0; i < cartDetails.size(); i++) {
-            if (usName.equals(cartDetails.get(i).getCart().getName())) {
+            if (usName.equals(cartDetails.get(i).getCart().getName()) && !cartDetails.get(i).getCart().isPaid()) {
                 cartDetails.get(i).display();
-                sum += cartDetails.get(i).getProduct().getPrice() * cartDetails.get(i).getQuantity();
             }
         }
-        System.out.println("Total amount to be paid: " + sum);
+        sumPaid();
         return null;
     }
 
+    public void payCart() {
+        System.out.println("Do you want to pay for these products ?");
+        System.out.println("y: yes");
+        System.out.println("n: no");
+        String choose = scanner.nextLine();
+        if (choose.equals("y")) {
+            for (CartDetail cartDetail : cartDetails) {
+                if (cartDetail.getCart().getName().equals(accountPresent.getUsername())) {
+                    cartDetail.getCart().setPaid(true);
+                    System.out.println("you have successfully paid !");
+                    writeBinary(PATH_FILE,cartDetails);
+                }
+            }
+        } else if (choose.equals("n")) {
+            System.out.println("you have not pay yet !!!");
+        } else {
+            System.out.println("no choice here !");
+        }
 
+    }
 
 
     public static void writeBinary(String path, ArrayList<CartDetail> cartDetails) {
