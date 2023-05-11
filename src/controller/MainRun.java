@@ -107,6 +107,7 @@ public class MainRun {
             System.out.println("|         5. Find account by username       |");
             System.out.println("|         6. Find account by id             |");
             System.out.println("|         7. Sort accounts by username      |");
+            System.out.println("|         8. Sort accounts by id            |");
             System.out.println("|         0. Exit!                          |");
             System.out.println("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
             System.out.println("         -->Enter your choice here!<--     ");
@@ -137,6 +138,9 @@ public class MainRun {
                     break;
                 case 7:
                     manageAccount.sortByName();
+                    break;
+                case 8:
+                    manageAccount.sortById();
                     break;
             }
         } while (choice != 0);

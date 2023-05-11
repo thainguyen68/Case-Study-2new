@@ -126,12 +126,19 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
                 System.err.println("Have error, please try again!");
             }
         } while (true);
-        for (Product product : productList) {
-            if (product.getId() == id) {
-                return product;
+        boolean checkIdPro = false;
+        do {
+            for (Product product : productList) {
+                if (product.getId() == id) {
+                    checkIdPro = true;
+                    return product;
+                }
             }
-        }
-        return null;
+            if (!checkIdPro) {
+                System.out.println("No product in store");
+                return getById();
+            }
+        } while (true);
     }
 
     public void displayAll() {
@@ -258,10 +265,9 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
         }
         if (chooseSort == 1) {
             sortByPriceLowToHigh();
-        } else if (chooseSort == 2){
+        } else if (chooseSort == 2) {
             sortByPriceHighTolLow();
-        }
-        else {
+        } else {
             System.out.println("no choice here !");
         }
     }
@@ -302,7 +308,7 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
         displayAll();
     }
 
-    public void sortById(){
+    public void sortById() {
         productList.sort(new Comparator<Product>() {
             @Override
             public int compare(Product o1, Product o2) {

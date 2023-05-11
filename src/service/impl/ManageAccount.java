@@ -465,6 +465,19 @@ public class ManageAccount implements Manage<Account>, IOFile<Account>, ManageFi
             }
         });
         displayAll();
+        write(accountList, PATH_FILE);
+    }
+
+    public void sortById() {
+        accountList.sort(new Comparator<Account>() {
+            @Override
+            public int compare(Account o1, Account o2) {
+
+                return o1.getId() - o2.getId();
+            }
+        });
+        displayAll();
+        write(accountList, PATH_FILE);
     }
 
 

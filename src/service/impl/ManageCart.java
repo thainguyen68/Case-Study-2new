@@ -42,7 +42,7 @@ public class ManageCart {
             }
         }
         manageProduct.displayAll();
-        Product p = manageProduct.getById();
+        Product product = manageProduct.getById();
         System.out.println("Enter the quantity you want to buy");
         int quantity = 0;
         try {
@@ -50,7 +50,7 @@ public class ManageCart {
         } catch (NumberFormatException e) {
             System.out.println("Have error, please try again!");
         }
-        addCart(p, quantity, cart);
+        addCart(product, quantity, cart);
     }
 
     public void addCart(Product product, int quantity, Cart cart) {
@@ -99,8 +99,14 @@ public class ManageCart {
         } catch (NumberFormatException e) {
             System.out.println("Have error, please try again!");
         }
+
+        int quantity = 0;
         System.out.println("number quantity you want");
-        int quantity = Integer.parseInt(scanner.nextLine());
+        try {
+            quantity = Integer.parseInt(scanner.nextLine());
+        }catch (NumberFormatException e) {
+            System.out.println("Have error, please try again!");
+        }
 
         for (int i = 0; i < cartDetails.size(); i++) {
             if (cartDetails.get(i).getCart().getName().equals(accountPresent.getUsername())) {
@@ -178,9 +184,8 @@ public class ManageCart {
             for (CartDetail cartDetail : cartDetails) {
                 if (cartDetail.getCart().getName().equals(accountPresent.getUsername())) {
                     cartDetail.getCart().setPaid(true);
-                    System.out.println("you have successfully paid !");
+//                    System.out.println("you have successfully paid !");
                     writeBinary(PATH_FILE, cartDetails);
-                    break;
                 }
             }
         } else if (choose.equals("n")) {
@@ -188,7 +193,6 @@ public class ManageCart {
         } else {
             System.out.println("no choice here !");
         }
-
     }
 
 
