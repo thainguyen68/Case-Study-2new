@@ -78,16 +78,36 @@ public class ManageCart {
             System.out.println("Have error, please try again!");
         }
 
-        int index = 0;
         for (int i = 0; i < cartDetails.size(); i++) {
-            if (cartDetails.get(i).getCart().getName().equals(String.valueOf(accountPresent.getUsername()))) {
+            if (cartDetails.get(i).getCart().getName().equals(accountPresent.getUsername())) {
                 if (idCart == cartDetails.get(i).getId()) {
-                    i = index;
                     cartDetails.remove(cartDetails.get(i));
                     System.out.println("Removed from cart !");
                 }
-            } else {
-                return null;
+            }
+        }
+        writeBinary(PATH_FILE, cartDetails);
+        return displayCartUser();
+    }
+
+    public CartDetail updateQuantity() {
+        displayCartUser();
+        System.out.println("Enter id you want to change quantity");
+        int idCart = -1;
+        try {
+            idCart = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Have error, please try again!");
+        }
+        System.out.println("number quantity you want");
+        int quantity = Integer.parseInt(scanner.nextLine());
+
+        for (int i = 0; i < cartDetails.size(); i++) {
+            if (cartDetails.get(i).getCart().getName().equals(accountPresent.getUsername())) {
+                if (idCart == cartDetails.get(i).getId()) {
+                    cartDetails.get(i).setQuantity(quantity);
+                    System.out.println("change quantity success !");
+                }
             }
         }
         writeBinary(PATH_FILE, cartDetails);
@@ -160,6 +180,7 @@ public class ManageCart {
                     cartDetail.getCart().setPaid(true);
                     System.out.println("you have successfully paid !");
                     writeBinary(PATH_FILE, cartDetails);
+                    break;
                 }
             }
         } else if (choose.equals("n")) {

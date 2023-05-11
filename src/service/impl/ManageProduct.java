@@ -290,6 +290,7 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
         displayAll();
     }
 
+
     public void sortByName() {
         productList.sort(new Comparator<Product>() {
             @Override
@@ -297,7 +298,17 @@ public class ManageProduct implements Manage<Product>, IOFile<Product>, ManageFi
                 return o1.getName().compareTo(o2.getName());
             }
         });
+
         displayAll();
     }
 
+    public void sortById(){
+        productList.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o1.getId() - o1.getId();
+            }
+        });
+        displayAll();
+    }
 }

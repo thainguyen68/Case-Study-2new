@@ -246,10 +246,12 @@ public class MainRun {
             System.out.println("|      6. Search product by price         |");
             System.out.println("|      7. Sort by price (about)           |");
             System.out.println("|      8. Sort by name                    |");
-            System.out.println("|      9. Add to cart(...)                |");
-            System.out.println("|      10. Display cart(...)              |");
-            System.out.println("|      11. Delete product in cart(...)    |");
-            System.out.println("|      12. Pay product in cart(...)       |");
+            System.out.println("|      9. Sort by id                      |");
+            System.out.println("|      10. Add to cart(...)               |");
+            System.out.println("|      11. Display cart(...)              |");
+            System.out.println("|      12. Delete product in cart(...)    |");
+            System.out.println("|      13. Change quantity product(...)   |");
+            System.out.println("|      14. Pay product in cart(...)       |");
             System.out.println("|      0. Exit!                           |");
             System.out.println("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
             System.out.println("       -->Enter your choice here!<--   ");
@@ -285,15 +287,21 @@ public class MainRun {
                     manageProduct.sortByName();
                     break;
                 case 9:
-                    manageCart.cart();
+                    manageProduct.sortById();
                     break;
                 case 10:
-                    manageCart.displayCartUser();
+                    manageCart.cart();
                     break;
                 case 11:
-                    manageCart.deleteCart();
+                    manageCart.displayCartUser();
                     break;
                 case 12:
+                    manageCart.deleteCart();
+                    break;
+                case 13:
+                    manageCart.updateQuantity();
+                    break;
+                case 14:
                     manageCart.payCart();
                     break;
             }

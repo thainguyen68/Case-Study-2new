@@ -1,10 +1,10 @@
 1,Iphone 12,1,5.5,90%
-8,Iphone 12,9,7.0,new
 2,Iphone 13,2,6.1,like-new
 3,Iphone 14,3,7.2,80%
 4,Iphone 14,14,5.0,like-new
 5,Iphone 14,10,8.6,new
 6,Iphone 14,1,7.5,85%
+8,Iphone 12,9,7.0,new
 7,Iphone 14,9,8.0,80%
 9,Iphone 14,1,8.0,like-new
 10,Iphone 15,18,10.0,new
